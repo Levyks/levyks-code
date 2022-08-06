@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+	height: 100%;
+}
+
+.markdown-blink {
+	animation: blink-cursor 0.75s step-end infinite;
+}
+
+@keyframes blink-cursor {
+	from,
+	to {
+		border-right: none;
+	}
+	50% {
+		border-right: 1px solid;
+	}
+}
