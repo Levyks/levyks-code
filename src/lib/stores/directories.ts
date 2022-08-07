@@ -10,7 +10,7 @@ export const tree: DirElementStore[] = [
 	folder('projects', [file('testing', solidHeroIcon(HomeIcon, 'text-amber-400'), {})]),
 	file('home', solidHeroIcon(HomeIcon, 'text-green-400'), {
 		en: () => import('$lib/content/home/en.md'),
-		'pt-BR': () => import('$lib/content/home/pt-BR.md')
+		pt: () => import('$lib/content/home/pt.md')
 	})
 ];
 

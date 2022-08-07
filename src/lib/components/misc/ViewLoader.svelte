@@ -1,12 +1,17 @@
 <script lang="ts">
+	import { ExclamationCircle } from 'svelte-hero-icons';
+
+	import Wrapper from '$lib/components/markdown/Wrapper.svelte';
 	import Spinner from './Spinner.svelte';
 	import Icon from './Icon.svelte';
+
+	import { parseMarkdownHtml } from '$lib/helpers/dom';
 	import { solidHeroIcon } from '$lib/helpers/icons';
-	import { ExclamationCircle } from 'svelte-hero-icons';
+
+	import { locale } from '$lib/i18n';
+
 	import type { File } from '$lib/typings/directories';
 	import type { Writable } from 'svelte/store';
-	import Wrapper from '../markdown/Wrapper.svelte';
-	import { parseMarkdownHtml } from '$lib/helpers/dom';
 
 	export let fileStore: Writable<File | null>;
 
@@ -14,12 +19,10 @@
 	let loading: boolean;
 	let error: boolean;
 
-	$: loadComponent($fileStore);
+	$: loadComponent($fileStore, $locale);
 
-	async function loadComponent(file: File | null) {
+	async function loadComponent(file: File | null, locale: string) {
 		error = false;
-
-		const locale = 'en';
 
 		if (!file) {
 			elements = [];
@@ -41,6 +44,7 @@
 				return f;
 			});
 		} catch (e) {
+			console.error(e);
 			error = true;
 		} finally {
 			loading = false;

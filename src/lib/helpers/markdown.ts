@@ -9,6 +9,12 @@ export function getHeadingDepth(heading: HTMLHeadingElement): HeadingDepth {
 	return parseInt(heading.tagName.slice(1)) as HeadingDepth;
 }
 
+const typingSound = typeof Audio !== 'undefined' && new Audio('/audio/typing.ogg');
+if (typingSound) {
+	typingSound.loop = true;
+	typingSound.volume = 0.1;
+}
+
 type State = {
 	started: boolean;
 	completed: boolean;
@@ -24,10 +30,6 @@ export function useMarkdownComponent(
 	fixed = false,
 	interval = 50
 ) {
-	const typingSound = new Audio('/audio/typing.ogg');
-	typingSound.loop = true;
-	typingSound.volume = 0.1;
-
 	const store = writable<State>({
 		started: false,
 		completed: false,
@@ -36,7 +38,7 @@ export function useMarkdownComponent(
 	});
 
 	function write() {
-		typingSound.play();
+		typingSound?.play();
 		return new Promise<void>((resolve) => {
 			store.update((state) => {
 				state.started = true;
@@ -58,7 +60,7 @@ export function useMarkdownComponent(
 	}
 
 	function handleCompleted(state: State): State {
-		typingSound.pause();
+		typingSound?.pause();
 		state = clearIntervalIfExists(state);
 		state.completed = true;
 		if (state.resolveCompleted) state.resolveCompleted();
