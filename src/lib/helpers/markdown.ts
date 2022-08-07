@@ -21,8 +21,13 @@ type State = {
 export function useMarkdownComponent(
 	context: MarkdownContext,
 	getElement: () => HTMLElement,
+	fixed = false,
 	interval = 50
 ) {
+	const typingSound = new Audio('/audio/typing.ogg');
+	typingSound.loop = true;
+	typingSound.volume = 0.1;
+
 	const store = writable<State>({
 		started: false,
 		completed: false,
@@ -31,6 +36,7 @@ export function useMarkdownComponent(
 	});
 
 	function write() {
+		typingSound.play();
 		return new Promise<void>((resolve) => {
 			store.update((state) => {
 				state.started = true;
@@ -52,6 +58,7 @@ export function useMarkdownComponent(
 	}
 
 	function handleCompleted(state: State): State {
+		typingSound.pause();
 		state = clearIntervalIfExists(state);
 		state.completed = true;
 		if (state.resolveCompleted) state.resolveCompleted();
@@ -95,11 +102,12 @@ export function useMarkdownComponent(
 		});
 	}
 
-	context.addChild({
-		isCompleted: () => get_store_value(store).completed,
-		write,
-		getElement
-	});
+	if (!fixed)
+		context.addChild({
+			isCompleted: () => get_store_value(store).completed,
+			write,
+			getElement
+		});
 
 	return { ...store, handleChange };
 }

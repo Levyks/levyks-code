@@ -10,7 +10,7 @@
 	export let fixed: boolean = false;
 
 	const context = getContext<MarkdownContext>(key);
-	const store = useMarkdownComponent(context, () => element);
+	const store = useMarkdownComponent(context, () => element, fixed);
 
 	$: store.handleChange(element);
 </script>
