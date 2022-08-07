@@ -1,22 +1,10 @@
-import i18n, { type Config } from 'sveltekit-i18n';
+import { register, init, getLocaleFromNavigator } from 'svelte-i18n';
 
-const config: Config = {
-	loaders: [
-		{
-			locale: 'en',
-			key: 'common',
-			loader: () => import('./en.yaml').then((m) => m.default)
-		},
-		{
-			locale: 'pt',
-			key: 'common',
-			loader: () => import('./pt.yaml').then((m) => m.default)
-		}
-	]
-};
+register('en', () => import('./en.yaml'));
+register('pt', () => import('./pt.yaml'));
 
 export function getDefaultLocale(acceptLanguage: string) {
-	const validLocales = config.loaders?.map((l) => l.locale) ?? [];
+	const validLocales = ['en', 'pt'];
 
 	const acceptedLocales = acceptLanguage.split(',').map((l) => l.split(';')[0].trim());
 
@@ -29,4 +17,11 @@ export function getDefaultLocale(acceptLanguage: string) {
 	return 'en';
 }
 
-export const { t, locale, locales, loading, loadTranslations } = new i18n(config);
+/*
+if (typeof navigator !== 'undefined') {
+	init({
+		fallbackLocale: 'en',
+		initialLocale: getLocaleFromNavigator()
+	});
+}
+*/

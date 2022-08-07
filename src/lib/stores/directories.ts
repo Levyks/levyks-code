@@ -7,8 +7,8 @@ import type { DirElement, Folder, File, DirElementStore, IconDef } from '$lib/ty
 import type { MarkdownImporterDict } from '$lib/typings/misc';
 
 export const tree: DirElementStore[] = [
-	folder('projects', [file('testing', solidHeroIcon(HomeIcon, 'text-amber-400'), {})]),
-	file('home', solidHeroIcon(HomeIcon, 'text-green-400'), {
+	folder('dir.projects', [file('testing', solidHeroIcon(HomeIcon, 'text-amber-400'), {})]),
+	file('dir.home', solidHeroIcon(HomeIcon, 'text-green-400'), {
 		en: () => import('$lib/content/home/en.md'),
 		pt: () => import('$lib/content/home/pt.md')
 	})

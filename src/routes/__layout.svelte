@@ -1,14 +1,19 @@
 <script context="module" lang="ts">
 	import type { LoadEvent } from '@sveltejs/kit';
 
-	import { locale, loadTranslations, getDefaultLocale } from '$lib/i18n';
+	import { init, waitLocale } from 'svelte-i18n';
+	import { getDefaultLocale } from '$lib/i18n';
 
 	export const load = async (props: LoadEvent) => {
-		const pathname = props.url.pathname;
+		const initialLocale = getDefaultLocale(props.session.acceptLanguage);
 
-		const initLocale = locale.get() || getDefaultLocale(props.session.acceptLanguage);
+		init({
+			// We should have all the keys in all translations, so no need to waste bandwith with a fallback
+			fallbackLocale: initialLocale,
+			initialLocale
+		});
 
-		await loadTranslations(initLocale, pathname); // keep this just before the `return`
+		await waitLocale();
 
 		return {};
 	};

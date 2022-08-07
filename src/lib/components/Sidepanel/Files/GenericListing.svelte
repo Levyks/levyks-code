@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	import Icon from '$lib/components/misc/Icon.svelte';
 	import type { IconDef } from '$lib/typings/directories';
@@ -20,7 +21,7 @@
 	<span style="width: {indent}rem" />
 	<slot />
 	<Icon def={icon} />
-	<span class="ml-1">{name}</span>
+	<span class="ml-1">{$_(name)}</span>
 </div>
 
 <style>

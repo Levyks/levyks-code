@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ExclamationCircle } from 'svelte-hero-icons';
+	import { locale } from 'svelte-i18n';
 
 	import Wrapper from '$lib/components/markdown/Wrapper.svelte';
 	import Spinner from './Spinner.svelte';
@@ -7,8 +8,6 @@
 
 	import { parseMarkdownHtml } from '$lib/helpers/dom';
 	import { solidHeroIcon } from '$lib/helpers/icons';
-
-	import { locale } from '$lib/i18n';
 
 	import type { File } from '$lib/typings/directories';
 	import type { Writable } from 'svelte/store';
@@ -19,7 +18,7 @@
 	let loading: boolean;
 	let error: boolean;
 
-	$: loadComponent($fileStore, $locale);
+	$: loadComponent($fileStore, $locale as string);
 
 	async function loadComponent(file: File | null, locale: string) {
 		error = false;

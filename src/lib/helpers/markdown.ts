@@ -9,7 +9,7 @@ export function getHeadingDepth(heading: HTMLHeadingElement): HeadingDepth {
 	return parseInt(heading.tagName.slice(1)) as HeadingDepth;
 }
 
-const typingSound = typeof Audio !== 'undefined' && new Audio('/audio/typing.ogg');
+const typingSound = typeof Audio !== 'undefined' ? new Audio('/audio/typing.ogg') : undefined;
 if (typingSound) {
 	typingSound.loop = true;
 	typingSound.volume = 0.1;
