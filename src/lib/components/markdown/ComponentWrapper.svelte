@@ -33,7 +33,6 @@
 	function getComponent(
 		element: HTMLElement
 	): ComponentConstructor<{ element?: HTMLElement }> | undefined {
-		console.log('el', element);
 		for (const [type, component] of components) {
 			if (element instanceof HTMLAnchorElement && isCustomComponent(element)) {
 				return CustomComponent;

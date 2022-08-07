@@ -7,8 +7,6 @@ export function createParagraph(text: string): HTMLParagraphElement {
 function flattenParagraph(p: HTMLParagraphElement): HTMLElement[] {
 	const elements: HTMLElement[] = [];
 
-	console.log('p', p.childNodes);
-
 	for (const child of p.childNodes) {
 		if (child.nodeType === Node.TEXT_NODE && child.textContent?.trim()) {
 			elements.push(createParagraph(child.textContent));
@@ -26,8 +24,6 @@ export function parseMarkdownHtml(html: string): HTMLElement[] {
 	const dom = document.createElement('div');
 	dom.innerHTML = html;
 
-	console.log('dom', dom.children);
-
 	const elements: HTMLElement[] = [];
 
 	for (const child of dom.children) {
@@ -37,8 +33,6 @@ export function parseMarkdownHtml(html: string): HTMLElement[] {
 			elements.push(child as HTMLElement);
 		}
 	}
-
-	console.log('elements', elements);
 
 	return elements;
 }
