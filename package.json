@@ -16,6 +16,7 @@
 		"@playwright/test": "^1.22.2",
 		"@rollup/plugin-yaml": "^3.1.0",
 		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/adapter-netlify": "1.0.0-next.71",
 		"@sveltejs/kit": "next",
 		"@types/markdown-it": "^12.2.3",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
