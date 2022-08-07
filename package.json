@@ -18,7 +18,6 @@
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/markdown-it": "^12.2.3",
-		"@types/uuid": "^8.3.4",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"autoprefixer": "^10.4.7",
@@ -26,7 +25,6 @@
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"markdown-it": "^13.0.1",
-		"markdown-it-custom-block": "^0.1.2",
 		"postcss": "^8.4.14",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.7.0",
@@ -39,7 +37,7 @@
 		"tslib": "^2.3.1",
 		"typescript": "^4.7.2",
 		"vite": "^3.0.0",
-		"vite-plugin-markdown": "github:Levyks/vite-plugin-markdown#feature/import_as_tokens"
+		"vite-plugin-markdown": "^2.1.0"
 	},
 	"type": "module",
 	"dependencies": {

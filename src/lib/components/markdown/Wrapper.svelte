@@ -2,33 +2,42 @@
 	import { onMount, setContext } from 'svelte';
 
 	import { key } from '$lib/helpers/markdown';
+
+	import ComponentWrapper from './ComponentWrapper.svelte';
+
 	import type { MarkdownChild, MarkdownContext } from '$lib/typings/markdown';
 
-	export let interval: number = 100;
+	export let elements: HTMLElement[];
 	let className: string = '';
-
-	setContext<MarkdownContext>(key, {
-		addChild
-	});
+	let mounted = false;
 
 	let children: MarkdownChild[] = [];
-	function addChild(child: MarkdownChild) {
-		children = children.concat(child);
-	}
+	setContext<MarkdownContext>(key, {
+		addChild: (child: MarkdownChild) => children.push(child)
+	});
 
 	async function write() {
-		console.log('children', children);
 		for (const child of children) {
 			if (child.isCompleted()) continue;
-			await child.write(interval);
+			await child.write();
+			if (!mounted) break;
+			child.getElement().setAttribute('data-completed', '1');
 		}
 	}
 
-	onMount(write);
+	onMount(() => {
+		mounted = true;
+		write();
+		return () => {
+			mounted = false;
+		};
+	});
 
 	export { className as class };
 </script>
 
 <div class={className}>
-	<slot />
+	{#each elements as element}
+		<ComponentWrapper {element} />
+	{/each}
 </div>

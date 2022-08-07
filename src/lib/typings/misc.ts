@@ -7,4 +7,12 @@ export type ComponentImporter = () => Promise<{
 	default: ComponentConstructor;
 }>;
 
+export type MarkdownImporter = () => Promise<{
+	html: string;
+}>;
+
+export type MarkdownImporterDict = {
+	[key: string]: MarkdownImporter;
+};
+
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;

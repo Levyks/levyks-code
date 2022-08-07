@@ -1,6 +1,7 @@
 export type MarkdownChild = {
 	isCompleted: () => boolean;
-	write: (intervalMS: number) => Promise<void>;
+	write: () => Promise<void>;
+	getElement: () => HTMLElement;
 };
 
 export type MarkdownContext = {

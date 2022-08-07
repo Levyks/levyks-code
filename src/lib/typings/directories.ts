@@ -1,6 +1,6 @@
 import type { DirElementType } from '$lib/enums/dir';
 import type { Writable } from 'svelte/store';
-import type { ComponentConstructor, ComponentImporter } from './misc';
+import type { ComponentConstructor, MarkdownImporterDict } from './misc';
 
 export interface DirElement {
 	type: DirElementType;
@@ -20,8 +20,8 @@ export interface IconDef<Props = Record<string, unknown>> {
 export interface File extends DirElement {
 	type: DirElementType.File;
 	icon: IconDef;
-	componentImporter: ComponentImporter;
-	component?: ComponentConstructor | undefined;
+	markdownImporterDict: MarkdownImporterDict;
+	markdownHtmlDict: Record<string, HTMLElement[]>;
 }
 
 export interface Folder extends DirElement {

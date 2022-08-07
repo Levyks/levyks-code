@@ -1,68 +1,31 @@
 <script lang="ts">
-	import { key } from '$lib/helpers/markdown';
+	import { getContext } from 'svelte';
+	import { key, useMarkdownComponent, getHeadingDepth } from '$lib/helpers/markdown';
 	import type { HeadingDepth, MarkdownContext } from '$lib/typings/markdown';
 
-	import { getContext } from 'svelte';
-
-	export let depth: HeadingDepth = 1;
-	export let content: string;
-
-	let intervalTimer: NodeJS.Timer;
-	let started = false;
-	let completed = false;
-	let written: string = '';
-	let target: string;
-	let interval: number;
-	let resolveCompletion: () => void;
-
-	function write(intervalMS: number) {
-		interval = intervalMS;
-		started = true;
-		if (completed) return Promise.resolve();
-		return new Promise<void>((resolve) => {
-			resolveCompletion = resolve;
-			handleChange(content, depth);
-		});
-	}
-
-	function handleChange(content: string, depth: HeadingDepth) {
-		if (!started) return;
-		clearInterval(intervalTimer);
-		written = '';
-		target = '#'.repeat(depth) + ' ' + content;
-		completed = false;
-		intervalTimer = setInterval(typeLetter, interval);
-	}
-
-	function typeLetter() {
-		if (written === target) {
-			completed = true;
-			written = content;
-			if (resolveCompletion) resolveCompletion();
-			clearInterval(intervalTimer);
-			return;
-		}
-		written += target[written.length];
-	}
-
-	$: handleChange(content, depth);
-
-	const sizes = ['text-4xl', 'text-3xl', 'text-2xl', 'text-xl', 'text-lg', 'text-md'];
+	export let element: HTMLHeadingElement;
+	let depth: HeadingDepth;
+	$: depth = getHeadingDepth(element);
 
 	const context = getContext<MarkdownContext>(key);
-	context.addChild({
-		isCompleted: () => completed,
-		write
-	});
+	const store = useMarkdownComponent(context, () => element);
+
+	$: store.handleChange(element);
+
+	const sizes = ['text-4xl', 'text-3xl', 'text-2xl', 'text-xl', 'text-lg', 'text-md'];
 </script>
 
 <div
 	role="heading"
 	aria-level={depth}
-	aria-label={content}
-	class="border-r-odp-fg pr-0.5 w-fit {completed ? sizes[depth] : ''}"
-	class:markdown-blink={started && !completed}
-	class:font-bold={completed}
+	aria-label={element.textContent}
+	class="border-r-odp-fg pr-0.5 w-fit mb-4 {$store.completed ? sizes[depth] : ''}"
+	class:markdown-blink={$store.started && !$store.completed}
+	class:font-bold={$store.completed}
 >
-	{written}
+	{#if $store.completed}
+		{element.textContent}
+	{:else}
+		{$store.written}
+	{/if}
 </div>

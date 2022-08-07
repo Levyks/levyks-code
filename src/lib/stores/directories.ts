@@ -4,17 +4,14 @@ import { Home as HomeIcon } from 'svelte-hero-icons';
 import { solidHeroIcon } from '$lib/helpers/icons';
 import { DirElementType } from '$lib/enums/dir';
 import type { DirElement, Folder, File, DirElementStore, IconDef } from '$lib/typings/directories';
-import type { ComponentImporter } from '$lib/typings/misc';
+import type { MarkdownImporterDict } from '$lib/typings/misc';
 
 export const tree: DirElementStore[] = [
-	folder('projects', [
-		file(
-			'testing',
-			solidHeroIcon(HomeIcon, 'text-amber-400'),
-			() => import('$lib/views/projects/Test.svelte')
-		)
-	]),
-	file('home', solidHeroIcon(HomeIcon, 'text-green-400'), () => import('$lib/views/Home.svelte'))
+	folder('projects', [file('testing', solidHeroIcon(HomeIcon, 'text-amber-400'), {})]),
+	file('home', solidHeroIcon(HomeIcon, 'text-green-400'), {
+		en: () => import('$lib/content/home/en.md'),
+		'pt-BR': () => import('$lib/content/home/pt-BR.md')
+	})
 ];
 
 function createStore<T extends DirElement>(data: T): DirElementStore<T> {
@@ -51,12 +48,13 @@ function folder(name: string, children: DirElementStore[]): DirElementStore<Fold
 function file(
 	name: string,
 	icon: IconDef,
-	componentImporter: ComponentImporter
+	markdownImporterDict: MarkdownImporterDict
 ): DirElementStore<File> {
 	return createStore<File>({
 		type: DirElementType.File,
 		name,
 		icon,
-		componentImporter
+		markdownImporterDict,
+		markdownHtmlDict: {}
 	});
 }

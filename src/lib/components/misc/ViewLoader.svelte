@@ -4,12 +4,13 @@
 	import { solidHeroIcon } from '$lib/helpers/icons';
 	import { ExclamationCircle } from 'svelte-hero-icons';
 	import type { File } from '$lib/typings/directories';
-	import type { ComponentConstructor } from '$lib/typings/misc';
 	import type { Writable } from 'svelte/store';
+	import Wrapper from '../markdown/Wrapper.svelte';
+	import { parseMarkdownHtml } from '$lib/helpers/dom';
 
 	export let fileStore: Writable<File | null>;
 
-	let component: ComponentConstructor | undefined;
+	let elements: HTMLElement[];
 	let loading: boolean;
 	let error: boolean;
 
@@ -18,21 +19,25 @@
 	async function loadComponent(file: File | null) {
 		error = false;
 
+		const locale = 'en';
+
 		if (!file) {
-			component = undefined;
+			elements = [];
 			return;
 		}
 
-		if (file.component) {
-			component = file.component;
+		if (file.markdownHtmlDict[locale]) {
+			elements = file.markdownHtmlDict[locale];
 			return;
 		}
 
 		loading = true;
 		try {
-			component = await file.componentImporter().then((m) => m.default);
+			const markdownImporter = file.markdownImporterDict[locale];
+			const html = await markdownImporter().then((module) => module.html);
+			elements = parseMarkdownHtml(html);
 			fileStore.update((f) => {
-				f!.component = component;
+				f!.markdownHtmlDict[locale] = elements;
 				return f;
 			});
 		} catch (e) {
@@ -60,6 +65,6 @@
 			</div>
 		</div>
 	{:else}
-		<svelte:component this={component} />
+		<Wrapper class="flex-grow self-stretch" {elements} />
 	{/if}
 </div>
