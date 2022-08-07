@@ -4,7 +4,7 @@ import type { ComponentConstructor, MarkdownImporterDict } from './misc';
 
 export interface DirElement {
 	type: DirElementType;
-	name: string;
+	translationKey: string;
 	parent?: DirElementStore<Folder>;
 }
 

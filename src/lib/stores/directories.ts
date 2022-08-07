@@ -32,10 +32,10 @@ function createStore<T extends DirElement>(data: T): DirElementStore<T> {
 	};
 }
 
-function folder(name: string, children: DirElementStore[]): DirElementStore<Folder> {
+function folder(translationKey: string, children: DirElementStore[]): DirElementStore<Folder> {
 	const store = createStore<Folder>({
 		type: DirElementType.Folder,
-		name,
+		translationKey,
 		open: false,
 		children
 	});
@@ -46,13 +46,13 @@ function folder(name: string, children: DirElementStore[]): DirElementStore<Fold
 }
 
 function file(
-	name: string,
+	translationKey: string,
 	icon: IconDef,
 	markdownImporterDict: MarkdownImporterDict
 ): DirElementStore<File> {
 	return createStore<File>({
 		type: DirElementType.File,
-		name,
+		translationKey,
 		icon,
 		markdownImporterDict,
 		markdownHtmlDict: {}

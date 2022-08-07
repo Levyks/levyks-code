@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _ } from 'svelte-i18n';
 	import { X as CloseIcon } from 'svelte-hero-icons';
 
 	import Icon from '$lib/components/misc/Icon.svelte';
@@ -36,7 +37,7 @@
 	on:click={() => currentTab.set(file)}
 >
 	<Icon def={file.icon} />
-	<span class="mx-1">{file.name}</span>
+	<span class="mx-1">{$_(file.translationKey)}</span>
 	<button class="hover:bg-odp-light-bg p-0.5 rounded" on:click={handleClose}>
 		<Icon def={solidHeroIcon(CloseIcon)} />
 	</button>

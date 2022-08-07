@@ -15,7 +15,7 @@
 </script>
 
 <GenericListing
-	name={$file.name}
+	translationKey={$file.translationKey}
 	icon={$file.icon}
 	{indent}
 	on:click={handleClick}

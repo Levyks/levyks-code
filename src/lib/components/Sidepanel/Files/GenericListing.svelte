@@ -5,7 +5,7 @@
 	import Icon from '$lib/components/misc/Icon.svelte';
 	import type { IconDef } from '$lib/typings/directories';
 
-	export let name: string;
+	export let translationKey: string;
 	export let icon: IconDef;
 	export let indent: number = 0;
 	export let selected: boolean = false;
@@ -21,7 +21,7 @@
 	<span style="width: {indent}rem" />
 	<slot />
 	<Icon def={icon} />
-	<span class="ml-1">{$_(name)}</span>
+	<span class="ml-1">{$_(translationKey)}</span>
 </div>
 
 <style>

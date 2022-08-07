@@ -22,8 +22,10 @@
 </script>
 
 <GenericListing
-	name={$folder.name}
-	icon={$folder.open ? solidHeroIcon(FolderOpenIcon, 'text-amber-400') : solidHeroIcon(FolderIcon, 'text-amber-400')}
+	translationKey={$folder.translationKey}
+	icon={$folder.open
+		? solidHeroIcon(FolderOpenIcon, 'text-amber-400')
+		: solidHeroIcon(FolderIcon, 'text-amber-400')}
 	{indent}
 	on:click={handleClick}
 >
