@@ -7,6 +7,7 @@
 	export let indent: number = 0;
 
 	function handleClick() {
+		if ($currentTab === $file) return;
 		if (!$tabs.some((tab) => tab === $file)) {
 			tabs.update((t) => t.concat($file));
 		}

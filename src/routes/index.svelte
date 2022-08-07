@@ -6,6 +6,10 @@
 	import { currentTab } from '$lib/stores/tabs';
 </script>
 
+<svelte:head>
+	<title>Levy Barbosa</title>
+</svelte:head>
+
 <div class="h-full bg-odp-bg text-odp-fg flex font-mono">
 	<Sidebar />
 	<Sidepanel />

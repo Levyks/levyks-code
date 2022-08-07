@@ -8,12 +8,15 @@
 	import type { MarkdownChild, MarkdownContext } from '$lib/typings/markdown';
 
 	export let elements: HTMLElement[];
+
+	let wrapperDiv: HTMLDivElement;
 	let className: string = '';
 	let mounted = false;
 
 	let children: MarkdownChild[] = [];
 	setContext<MarkdownContext>(key, {
-		addChild: (child: MarkdownChild) => children.push(child)
+		addChild: (child: MarkdownChild) => children.push(child),
+		getWrapper: () => wrapperDiv
 	});
 
 	async function write() {
@@ -36,7 +39,7 @@
 	export { className as class };
 </script>
 
-<div class={className}>
+<div class={className} bind:this={wrapperDiv}>
 	{#each elements as element}
 		<ComponentWrapper {element} />
 	{/each}

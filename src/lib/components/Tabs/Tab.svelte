@@ -10,6 +10,10 @@
 
 	export let file: File;
 
+	function handleClick() {
+		if ($currentTab !== file) $currentTab = file;
+	}
+
 	function handleClose() {
 		const idx = $tabs.findIndex((tab) => tab === file);
 
@@ -18,6 +22,8 @@
 				array.splice(idx, 1);
 				return array;
 			});
+
+		if ($currentTab !== file) return;
 
 		if (!$tabs.length) $currentTab = null;
 		else if (idx > 0) $currentTab = $tabs[idx - 1];
@@ -34,7 +40,7 @@
 	class:bg-odp-dark-bg={$currentTab !== file}
 	class:bg-odp-bg={$currentTab === file}
 	on:mousedown={handleMouseDown}
-	on:click={() => currentTab.set(file)}
+	on:click={handleClick}
 >
 	<Icon def={file.icon} />
 	<span class="mx-1">{$_(file.translationKey)}</span>

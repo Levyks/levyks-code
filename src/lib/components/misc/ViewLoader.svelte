@@ -51,7 +51,7 @@
 	}
 </script>
 
-<div class="flex-grow flex flex-col justify-center items-center p-3">
+<div class="flex-grow flex flex-col justify-center items-center p-3 overflow-y-hidden">
 	{#if loading}
 		<Spinner class="w-16 h-16 text-odp-light2-bg fill-odp-fg" />
 	{:else if error}
@@ -68,6 +68,8 @@
 			</div>
 		</div>
 	{:else}
-		<Wrapper class="flex-grow self-stretch" {elements} />
+		{#key elements}
+			<Wrapper class="flex-grow self-stretch overflow-y-auto" {elements} />
+		{/key}
 	{/if}
 </div>

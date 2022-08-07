@@ -82,6 +82,12 @@ export function useMarkdownComponent(
 			state.written += state.target[state.written.length];
 			return state;
 		});
+		scrollToBottom();
+	}
+
+	function scrollToBottom() {
+		const wrapper = context.getWrapper();
+		wrapper.scrollTop = wrapper.scrollHeight;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

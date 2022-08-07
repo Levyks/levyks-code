@@ -6,6 +6,7 @@ export type MarkdownChild = {
 
 export type MarkdownContext = {
 	addChild: (child: MarkdownChild) => void;
+	getWrapper: () => HTMLDivElement;
 };
 
 export type HeadingDepth = 1 | 2 | 3 | 4 | 5 | 6;

@@ -1,3 +1,6 @@
 dir:
   home: home
+  aboutThisWebsite: sobre-este-site
   projects: projetos
+  _projects:
+    songquiz: SongQuiz

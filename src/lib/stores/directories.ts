@@ -1,16 +1,29 @@
 import { writable } from 'svelte/store';
 
-import { Home as HomeIcon } from 'svelte-hero-icons';
+import {
+	Home as HomeIcon,
+	InformationCircle as InfoIcon,
+	MusicNote as MusicNoteIcon
+} from 'svelte-hero-icons';
 import { solidHeroIcon } from '$lib/helpers/icons';
 import { DirElementType } from '$lib/enums/dir';
 import type { DirElement, Folder, File, DirElementStore, IconDef } from '$lib/typings/directories';
 import type { MarkdownImporterDict } from '$lib/typings/misc';
 
 export const tree: DirElementStore[] = [
-	folder('dir.projects', [file('testing', solidHeroIcon(HomeIcon, 'text-amber-400'), {})]),
+	folder('dir.projects', [
+		file('dir._projects.songquiz', solidHeroIcon(MusicNoteIcon, 'text-blue-300'), {
+			en: () => import('$lib/content/projects/songquiz/en.md'),
+			pt: () => import('$lib/content/projects/songquiz/pt.md')
+		})
+	]),
 	file('dir.home', solidHeroIcon(HomeIcon, 'text-green-400'), {
 		en: () => import('$lib/content/home/en.md'),
 		pt: () => import('$lib/content/home/pt.md')
+	}),
+	file('dir.aboutThisWebsite', solidHeroIcon(InfoIcon, 'text-blue-400'), {
+		en: () => import('$lib/content/about-this-website/en.md'),
+		pt: () => import('$lib/content/about-this-website/pt.md')
 	})
 ];
 
